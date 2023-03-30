@@ -1,7 +1,7 @@
 import { ToDo } from "../to-do/models/to-do.models";
 
 
-const Filters = {
+export const Filters = {
     All: 'all',
     Completed: 'Completed',
     Pending: 'Pending'
