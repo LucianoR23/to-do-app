@@ -7,10 +7,20 @@ export const Filters = {
     Pending: 'Pending'
 }
 
-const state = {
+export const state = {
     toDo: [],
     filter: Filters.All,
 }
+
+// const checkCompleted = () => {
+//     const checkComplete = document.querySelector('.clear-completed')
+//     const doneOrNot = state.toDo.find(todo => todo.done === true);
+//     console.log(!!doneOrNot, checkComplete);
+//     // if(!!doneOrNot){
+//     //     checkComplete[0 = button.clear-completed]
+//     // }
+        
+// }
 
 
 const initStore = () => {
@@ -23,10 +33,12 @@ const saveStateToLocalStorage = () => {
 
 const loadStore = () => {
     if(!localStorage.getItem('state')) return;
-    
+
     const {toDo = [], filter = Filters.All} = JSON.parse(localStorage.getItem('state'))
     state.toDo = toDo;
     state.filter = filter;
+
+    // checkCompleted();
 }
 
 

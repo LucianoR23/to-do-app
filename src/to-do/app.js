@@ -1,5 +1,5 @@
 import html from "./app.html?raw";
-import toDoStore, { Filters } from "../store/to-do.store";
+import toDoStore, { Filters, state } from "../store/to-do.store";
 import { renderTodo, renderPending } from "./use-cases";
 
 const ElementIDs = {
@@ -8,6 +8,15 @@ const ElementIDs = {
     ClearCompleted: '.clear-completed',
     ToDoFilter: '.filtro',
     PendingCount: '#pending-count'
+}
+
+const checkCompleted = () => {
+    const checkComplete = document.querySelector(ElementIDs.ClearCompleted)
+    const doneOrNot = state.toDo.find(todo => todo.done === true);
+    if(!!doneOrNot){
+        checkComplete.classList.remove('hidden')
+    } else{checkComplete.classList.add('hidden')}
+        
 }
 
 
@@ -22,6 +31,7 @@ export const App = (elementId) => {
         const toDos = toDoStore.getToDo(toDoStore.getCurrentFilter());
         renderTodo(ElementIDs.TodoList, toDos)
         updatePendingCount();
+        checkCompleted();
     }
 
     const updatePendingCount = () => {
@@ -43,7 +53,6 @@ export const App = (elementId) => {
     const clearCompletedButton = document.querySelector(ElementIDs.ClearCompleted);
     const filterList = document.querySelectorAll(ElementIDs.ToDoFilter);
 
-
     //Listeners
     newDescriptionInput.addEventListener('keyup', (event) => {
         if( event.keyCode !== 13 ) return;
@@ -58,6 +67,7 @@ export const App = (elementId) => {
     todoListUL.addEventListener('click', (event) => {
         const element = event.target.closest('[data-id]');
         toDoStore.toggleToDo(element.getAttribute('data-id'));
+        
         displayToDo();
     })
 
@@ -99,5 +109,6 @@ export const App = (elementId) => {
             displayToDo();
         })
     });
+
 
 }
